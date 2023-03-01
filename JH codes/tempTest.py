@@ -1,18 +1,18 @@
+# -*- coding: utf-8 -*-
 #%% importing CSV folder in a dictionary
 import csv
 
 with open('property-listing.csv', mode='r') as csv_file:
-    csv_reader = csv.DictReader(csv_file)
-    line_count = 0
-    for row in csv_reader:
-        if line_count == 0:
-            print(f'{", ".join(row)}')
-            line_count += 1
-        print(f'\t{row["address"]} loacted at {row["area"]} , and is in the {row["town"]}.')
-        line_count += 1
-    print(f'Processed {line_count} lines.')
+    csv_reader = csv.reader(csv_file)
+    list_of_rows = list(csv_reader)
+    print(list_of_rows)
     
-#%% turning attributes into criteria
+    row_number = 2
+    col_number = 3
+    value = list_of_rows[row_number - 1][col_number - 1]
+    print('area is at:', value)
+    
+#%%  turning attributes into criteria
 
 attributes_list = []
 file = open("property-attributes.txt", "r")
@@ -31,7 +31,7 @@ attributes_value = attributes
 my_dict = {}
 for i in range(len(attributes_key)):
     my_dict[attributes_key[i]] = attributes_value[i]
-    
+
 #%%  getting user input of what criteria they want
 while True:
     for key, value in my_dict.items():
@@ -77,18 +77,39 @@ print("You chose the following property criteria:")
 for choice in chosen_criteria:
     print(f" - {choice}: {my_dict[choice]}")
 
-
-#%% DISPLAY CHOSEN CRITERIA OPTION
-ind=0
+#%% DISPLAY CHOSEN CRITERIA OPTIONS
+ind = 0
 def criteria_options(ind):
     headers = ['Option']
     headers.append(attributes_value[ind].title())
     print(f'''Here is a list of {headers[ind+1]}'s available for your property: ''')
     print('{:<15}{}'.format(*headers))
     print('-' * 25)
-    print(f'\t{row["address"]}')
-
+    index = []
+    for i in range(1,len()+1):
+        index.append(i)
+    for j in range(len()):
+        print(f"{index[j]:<15} {list_of_rows[j]}") 
+        
+    option = input("Please input one or more property numbers separated by commas: ").split(",")
+    option = [int(choice.strip()) for choice in option]  # Convert each choice to int and strip any whitespace
+    #criteria values are in area_choices
+    print("You selected the following areas:")
+    for choice in option:
+        print(f" - {csv_reader[headers[ind+1].lower()][choice-1]}")
+        
+    else:
+        pass
 def option_selectionABC():
     if "A" in chosen_criteria:
       criteria_options(0)
+    elif ["A","B"] in chosen_criteria:
+      criteria_options(0)
+      criteria_options(1)
+    elif ["A","B","C"] in chosen_criteria:
+      criteria_options(0)
+      criteria_options(1)
+      criteria_options(2)
     
+
+option_selectionABC()
