@@ -1,0 +1,10 @@
+C: property_type
+D: floor_size
+B: town
+A: area
+E: TOP
+F: bedrooms
+G: bathroom
+H: asking_price
+
+
