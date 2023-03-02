@@ -227,7 +227,8 @@ def option_selection():
         if (chosen_criteria[criteria_attribute]):
             filters = criteria_options(criteria_attribute, filters=filters)
             
-option_selection()
+while True:
+    option_selection()
 
 
 
