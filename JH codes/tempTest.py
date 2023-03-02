@@ -1,4 +1,6 @@
-#%% CREATING FUNCTION FOR USER DETAIL COLLECTION
+import summarise
+
+# %% CREATING FUNCTION FOR USER DETAIL COLLECTION
 global name
 global age
 global marital_status
@@ -139,10 +141,11 @@ while True:
     
     for choice in user_choices:
         # TODO Fix option "All" bug
-        if choice == "ALL":
+        if choice == 0 - 1:
             for key in chosen_criteria.keys():
                 chosen_criteria[key] = True
-            valid_choices += CHOSEN_ATTRIBUTES.keys()
+            for x in range(len(CHOSEN_ATTRIBUTES)):
+                valid_choices.append(x) 
             break
 
         elif CHOSEN_ATTRIBUTES[choice] in chosen_criteria.keys() and choice not in valid_choices:
@@ -226,6 +229,7 @@ def option_selection():
     for criteria_attribute in CHOSEN_ATTRIBUTES:
         if (chosen_criteria[criteria_attribute]):
             filters = criteria_options(criteria_attribute, filters=filters)
+    summarise.summarise(list_of_rows, attributes_dict, filters)
             
 option_selection()
 
