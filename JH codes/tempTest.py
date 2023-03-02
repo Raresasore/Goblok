@@ -1,3 +1,67 @@
+#%% CREATING FUNCTION FOR USER DETAIL COLLECTION
+global name
+global age
+global marital_status
+global income
+
+def user_input_int(prompt):
+    while True:
+        try:
+            user_input = int(input(prompt))
+            return user_input
+        except ValueError:
+            print("Invalid input. Please enter an integer.")
+            
+def start():
+   print("Welcome to your very own property search program!\n")
+   while True:
+       name = input("Hi! What is your name?\n Name:")
+       if not all(c.isalpha() or c.isspace() for c in name):
+           print("Invalid input. Name can only contain alphabets and spaces.")
+           continue
+       age = user_input_int(f"Hi {name}! What is your age?")
+       if age > 122:
+           print("Invalid input. Age cannot be greater than 122.")
+           continue
+       marital_status = user_input_int(f"Dear {name}, is your marital status currently \n [1] Single \n [2] Married \n Your reply (please input the number):")
+       if marital_status == 2:
+           income1 = user_input_int(f"Dear {name}, what is your estimated monthly income after CPF deduction:")
+           income2 = user_input_int(f"Dear {name}, what is your spouse's estimated monthly income after CPF deduction:")
+           total_income = (income1 + income2) // 1000 * 1000
+       else:
+           income1 = user_input_int(f"Dear {name}, what is your estimated monthly income after CPF deduction (rounded to nearest thousand):")
+           total_income = income1 // 1000 * 1000
+       return name, age, marital_status, total_income
+
+
+#%% RUNNING USER DETAIL COLLECTION CODE
+
+name, age, marital_status, total_income = start()
+print(f"""
+------------------------------------------
+Hi there {name}, your age is {age}. 
+Your marital status is: {'Married' if marital_status == 2 else 'Single'} 
+and your income after CPF deduction is: {total_income}.
+------------------------------------------
+      """)
+while True:
+    confirm_name = input("Please check If the above details are correct. If not you can renter your selection again or quit the program (y/n/q): ")
+    if confirm_name.lower() == "y":
+        print("""Thank you for confirming your choices. 
+         ~  Welcome to the Property Search Program ~""")
+        break
+    elif confirm_name.lower() == "n":
+        print("Please try again and select the criteria again.")
+        continue
+    elif confirm_name.lower() == "q":  # Check if the user wants to quit
+        print("Thank you for using this program. Goodbye!")
+        break
+    else:
+        print("Invalid input. Please enter y, n or q")
+
+
+
+
 #%% importing CSV folder in a dictionary
 # The attributes are arranged in hierarchy from most important to least important
 CHOSEN_ATTRIBUTES = ["property_type", "floor_size", "town", "area", "TOP", "bedrooms", "bathroom", "asking_price"]
@@ -157,5 +221,10 @@ def option_selection():
     for criteria_attribute in CHOSEN_ATTRIBUTES:
         if (chosen_criteria[criteria_attribute]):
             filters = criteria_options(criteria_attribute, filters=filters)
-
+            
 option_selection()
+
+
+
+
+
