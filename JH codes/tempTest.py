@@ -1,3 +1,5 @@
+import summarise
+
 #%% CREATING FUNCTION FOR USER DETAIL COLLECTION
 global name
 global age
@@ -63,8 +65,6 @@ while True:
         break
     else:
         print("Invalid input. Please enter y, n or q")
-
-
 
 
 #%% importing CSV folder in a dictionary
@@ -222,13 +222,14 @@ def criteria_options(attribute, filters):
 
 
 def option_selection():
-    filters = {}
+    user_choices = {}
     for criteria_attribute in CHOSEN_ATTRIBUTES:
         if (chosen_criteria[criteria_attribute]):
-            filters = criteria_options(criteria_attribute, filters=filters)
-            
-while True:
-    option_selection()
+            user_choices = criteria_options(criteria_attribute, filters=user_choices)
+    return user_choices
+
+user_choices = option_selection()
+summarise.summarise(list_of_rows, attributes_dict, user_choices)
 
 
 
