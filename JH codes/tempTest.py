@@ -1,6 +1,6 @@
 #%% importing CSV folder in a dictionary
 # The attributes are arranged in hierarchy from most important to least important
-CHOSEN_ATTRIBUTES = ["property_type", "floor_size", "town", "area", "TOP", "bedrooms", "bathroom", "asking_price"]
+CHOSEN_ATTRIBUTES = ["property_type", "floor_size", "town", "area", "TOP", "bedrooms", "bathroom", "asking_price", "ALL"]
 
 chosen_criteria = {}
 for criteria_option in CHOSEN_ATTRIBUTES:
@@ -32,9 +32,8 @@ def readListingTxt():
 #         list_of_rows = list(csv_reader)
 #     return list_of_rows
 
-
 list_of_rows = readListingTxt()
-    
+
 #%%  turning attributes into criteria
 def readAttributesTxt():
     attributes_list = []
@@ -48,14 +47,14 @@ def readAttributesTxt():
     str= attributes[-1][1:]
     attributes.pop(-1)
     attributes.append(str)
+    attributes.append("ALL")
     attributes_value = attributes
     my_dict = {}
     for i in range(len(attributes_value)):
         my_dict[attributes_value[i]] = i
     return my_dict
-
+    
 attributes_dict = readAttributesTxt()
-
 #%%  getting user input of what criteria they want
 while True:
     for x in range(len(CHOSEN_ATTRIBUTES)):
@@ -67,10 +66,10 @@ while True:
     user_choices = [int(choice.upper().strip()) - 1 for choice in user_choices]  # Convert each choice to upper case and strip any whitespace
     
     valid_choices = []
-    
+
     for choice in user_choices:
         # TODO Fix option "All" bug
-        if choice == "ALL":
+        if choice == 9:
             for key in chosen_criteria.keys():
                 chosen_criteria[key] = True
             valid_choices += CHOSEN_ATTRIBUTES.keys()
@@ -128,7 +127,6 @@ def criteria_options(attribute, filters):
         
         if(filtering() == False):
             continue
-        
         criteria_value = row[attributes_dict[attribute]]
         if (criteria_value in criteria_values):
             continue
@@ -159,3 +157,18 @@ def option_selection():
             filters = criteria_options(criteria_attribute, filters=filters)
 
 option_selection()
+
+#%% Summary Table
+
+
+
+
+
+
+
+
+
+
+
+
+
