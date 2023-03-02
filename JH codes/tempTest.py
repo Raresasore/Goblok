@@ -13,25 +13,30 @@ def user_input_int(prompt):
             print("Invalid input. Please enter an integer.")
             
 def start():
-   print("Welcome to your very own property search program!\n")
-   while True:
-       name = input("Hi! What is your name?\n Name:")
-       if not all(c.isalpha() or c.isspace() for c in name):
-           print("Invalid input. Name can only contain alphabets and spaces.")
-           continue
-       age = user_input_int(f"Hi {name}! What is your age?")
-       if age > 122:
-           print("Invalid input. Age cannot be greater than 122.")
-           continue
-       marital_status = user_input_int(f"Dear {name}, is your marital status currently \n [1] Single \n [2] Married \n Your reply (please input the number):")
-       if marital_status == 2:
-           income1 = user_input_int(f"Dear {name}, what is your estimated monthly income after CPF deduction:")
-           income2 = user_input_int(f"Dear {name}, what is your spouse's estimated monthly income after CPF deduction:")
-           total_income = (income1 + income2) // 1000 * 1000
-       else:
-           income1 = user_input_int(f"Dear {name}, what is your estimated monthly income after CPF deduction (rounded to nearest thousand):")
-           total_income = income1 // 1000 * 1000
-       return name, age, marital_status, total_income
+    print("Welcome to your very own property search program!\n")
+    while True:
+        name = input("Hi! What is your name?\n Name:")
+        if not all(c.isalpha() or c.isspace() for c in name):
+            print("Invalid input. Name can only contain alphabets and spaces.")
+            continue
+        age = user_input_int(f"Hi {name}! What is your age?")
+        if age > 122:
+            print("Invalid input. Age cannot be greater than 122.")
+            continue
+        while True:
+            marital_status = user_input_int(f"Dear {name}, is your marital status currently \n [1] Single \n [2] Married \n Your reply:")
+            if marital_status not in [1, 2]:
+                print("Invalid input. Please enter 1 for Single or 2 for Married.")
+            else:
+                break
+        if marital_status == 2:
+            income1 = user_input_int(f"Dear {name}, what is your estimated monthly income after CPF deduction rounded nearest thousands:")
+            income2 = user_input_int(f"Dear {name}, what is your spouse's estimated monthly income after CPF deduction rounded nearest thousands:")
+            total_income = income1 + income2
+        else:
+            income1 = user_input_int(f"Dear {name}, what is your estimated monthly income after CPF deduction (rounded to nearest thousand):")
+            total_income = income1 // 1000 * 1000
+        return name, age, marital_status, total_income
 
 
 #%% RUNNING USER DETAIL COLLECTION CODE
@@ -222,7 +227,8 @@ def option_selection():
         if (chosen_criteria[criteria_attribute]):
             filters = criteria_options(criteria_attribute, filters=filters)
             
-option_selection()
+while True:
+    option_selection()
 
 
 
